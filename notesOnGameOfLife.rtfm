@@ -1,0 +1,44 @@
+//Conway's Game of Life
+//Menu
+
+//Play
+//Settings
+//Quit
+
+
+//Settings
+//=====================
+//Style
+//Seed  -- they enter a number
+		-- the number is put into maybe a harmonic sequence and certain other numbers are modified by it. Maybe it slightly effects the chance for rules of the game to be broken.
+//Style
+//=====================
+//Character
+//Window Size
+
+//Character 
+//=====================
+//Default- @
+//Snowglobe - U+2744
+//Radioactive Fallout -- U+2622
+//Canadian Airplanes -- U+15DB
+//Fishey -- U+161E
+//Horsey -- U+265E
+//PI -- U+03A0
+//Will O' The Wisp -- U+058D
+//Action Jackson -- U+0394
+//Luminous Fridge -- U+000A
+//Just A Butt -- U+03D6
+//Sam -- U+070F
+//Fetus --  U+0BF5
+//Zombie Apocalypse - #
+
+//Seed
+//=====================
+//Set Seed
+//Default Seed
+-To be pasted at the end of each menu
+//Back to Settings
+//Back to Main Menu
+
+
