@@ -6,21 +6,22 @@ function fibonacci(n, display)
 
 	var evenSums = 0;
 
-	if(n < 4000000) {
-		for (var iteration = 1; iteration < n; iteration++){
-			if (display) { console.log(result); }
+	for (var iteration = 1; iteration < n; iteration++){
+		if (display) { console.log("iteration: " + iteration + " - " + result); }
+		if (result % 2 === 0) { evenSums += result; }
 
-			if (result % 2 === 0) { evenSums += result; }
-
-			temp = result
-			result += last;
-			last = temp;
+		temp = result
+		result += last;
+		last = temp;
+		if (result > 4000000) {
+			break;
 		}
 	}
+
 	return evenSums;
 }
 
 console.log("Standard fibonacci sequence: ");
-fibonacci(20, true);
+fibonacci(50, true);
 
-console.log("Sum of even results: ", fibonacci(20, false));
+console.log("Sum of even results: ", fibonacci(50, false));
