@@ -5,22 +5,19 @@ harmonicMeans(50000);
 
 
 function harmonicMeans(n){
-	var sumForward = 0;
+	var sumForward = 1;
 	for(var i = 1; i <= n; i++){
-		sumForward += (1/n);
+		sumForward +=(1/n);
 	}
 	console.log("The sum of the harmonic means left to right is " + sumForward);
 
-	var sumBackward = 0;
+	var sumBackward = 1;
 	for(var i = n; i >= 1; i--){
-		sumBackward += (1/n);
+		sumBackward +=(1/n);
 	}
 	console.log("The sum of the harmonic means right to left is " + sumBackward);
 
 }
 
-// Something is wonky with this but haven't figured it out yet.  Should equal really close to 2
-// The sum of the harmonic means left to right is 1.0000000000007185
-// The sum of the harmonic means right to left is 1.0000000000007185
 
 
