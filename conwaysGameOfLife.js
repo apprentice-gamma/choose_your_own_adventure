@@ -22,7 +22,7 @@ var Game = {
 
 	rows: [],
 	
-    SEED: Math.floor(Math.random()*16 + 2),
+    SEED: Math.floor(Math.random()*27 + 2),
 
 
 	generateRow: function(rowIndex){
@@ -30,7 +30,7 @@ var Game = {
 		var cells = [];
 		for (var i = 0; i < this.gridWidth; i++){
 			cells.push(this.newCell(i, rowIndex));
-			if ((i%this.SEED === 0 && rowIndex%(this.SEED+2) === 0) || (i%(this.SEED - 1) === 0 && rowIndex%this.SEED === 0) || i === this.SEED && rowIndex === this.SEED || i === this.SEED && rowIndex === (this.gridWidth/2) || i === this.SEED && rowIndex === this.SEED*2){ //starting pattern
+			if ((i%this.SEED === 0 && rowIndex%(this.SEED+2) === 0) || (i%(this.SEED - 1) === 0 && rowIndex%this.SEED === 0) || i === this.SEED && rowIndex === this.SEED || i === this.SEED && rowIndex === (this.gridWidth/2) || i === this.SEED && rowIndex === this.SEED*2 || rowIndex === this.DIMENSIONS%this.SEED || i === this.SEEd%this.DIMENSIONS/2){ //starting pattern
 				cells[i].isDead = false;
 				//console.log(cells[i].isDead);
 			}
