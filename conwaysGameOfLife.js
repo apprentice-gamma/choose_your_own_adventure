@@ -134,6 +134,27 @@ var Game = {
         return newpos;
     },
 
+    iterate: function(){
+
+        var thisCell;
+
+        for(y = 0; y < this.gridHeight; y++){
+            
+            for(x = 0;x < this.gridWidth; x++){
+                
+                thisCell = this.rows[x][y];
+
+                if (thisCell.survives === false){
+                    thisCell.isDead = true;
+                } else {
+                    thisCell.isDead = false;
+                }
+
+            }
+        }
+
+    },
+
 	checkLivingNeighbors: function(x, y){
         //console.log("Checking neighbors");
 		var livingNeighbors = 0;
@@ -185,6 +206,7 @@ var Game = {
 		this.displayGame();
 		console.log("Generation Two:");
 		this.checkGeneration();
+        this.iterate(); 
 		this.displayGame();
 	}
 		
