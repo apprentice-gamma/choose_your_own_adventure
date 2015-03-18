@@ -13,6 +13,10 @@ var Game = {
 	gridWidth: 32,
 	gridHeight: 16,
 
+    BUDDIES: [[-1,1],[0,1],[1,1],
+              [-1,0],      [1,0],
+              [-1,-1],[0,-1],[1,-1]],
+
 	rows: [],
 	
 	generateRow: function(rowIndex){
