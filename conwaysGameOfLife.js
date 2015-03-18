@@ -182,7 +182,177 @@ var Game = {
 Game.init();
 
 
+/*
+//BOUNDS
+            //Handle left bound
+            if (y == 0) {
+                if (board[x ][(y + 1)] == "x"){
+                    counter ++;
+                }
+                //Left bottom corner
+                if (x == 29) {
+                    if (board[(x - 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                }
+                //Left top corner
+                else if (x == 0) {
+                    if (board[(x + 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                }
+                else{
+                    if (board[(x - 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[x][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                }
+            }
+            //handle right bound
+            else if (y == 29) {
+                if (board[(x)][(y - 1)] == "x"){
+                    counter ++;
+                }
+                //right bottom corner
+                if (x == 29) {
+                    if (board[(x - 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                }
+                //right top corner
+                else if (x == 0) {
+                    if (board[x + 1][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                }
+                else{
+                    if (board[(x - 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[x][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][(x - 1)] == "x") {
+                        counter ++;
+                    }
+                }
+            }
+            else{
+                //Top bounds
+                if (x == 0) {
+                    if (board[x][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[x][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][y + 1] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][y - 1] == "x") {
+                        counter ++;
+                    }
 
+                }
+                //Bottom bounds
+                else if (x == 29) {
+                    if (board[x][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[x][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                }
+                else{
+                    //center of board
+                    if (board[x][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[x][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][y] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x - 1)][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][(y + 1)] == "x") {
+                        counter ++;
+                    }
+                    if (board[(x + 1)][(y - 1)] == "x") {
+                        counter ++;
+                    }
+                }
+            } //end board checking
+
+            //apply rules to cell
+            if (alive == true) {
+                if (counter < 2) {
+                    board[x][y] = "";
+                }
+                if (counter > 3) {
+                    board[x][y] = "";
+                }
+            }
+            else if (alive == false) {
+                if (counter == 3) {
+                    board[x][y] = "x";
+                }
+                else if (counter != 3){
+                    board[x][y] = "";
+                }
+            }
+
+in the Game-Of-Life you are supposed to scan the entire board, and only then apply the changes. You are applying changes part-way through the process (as you check each cell, you change its state). So, if you change the cell in one location, when you check it's neighbour it will affect the results).
+
+You need to 'store' the counter for each cell until you have completed the scan, and then re-set each block in the board. Essentially you need the following:
+
+*/
 
 
 
