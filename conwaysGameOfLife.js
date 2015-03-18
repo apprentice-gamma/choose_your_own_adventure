@@ -22,12 +22,15 @@ var Game = {
 
 	rows: [],
 	
+    SEED: Math.floor(Math.random()*16 + 2),
+
+
 	generateRow: function(rowIndex){
        // console.log("Generating Row");
 		var cells = [];
 		for (var i = 0; i < this.gridWidth; i++){
 			cells.push(this.newCell(i, rowIndex));
-			if ((i%3 === 0 && rowIndex%8 === 0) || (i%2 === 0 && rowIndex%5 === 0)){ //starting pattern
+			if ((i%this.SEED === 0 && rowIndex%(this.SEED+2) === 0) || (i%(this.SEED - 1) === 0 && rowIndex%this.SEED === 0) || i === this.SEED && rowIndex === this.SEED || i === this.SEED && rowIndex === (this.gridWidth/2) || i === this.SEED && rowIndex === this.SEED*2){ //starting pattern
 				cells[i].isDead = false;
 				//console.log(cells[i].isDead);
 			}
@@ -171,7 +174,7 @@ var Game = {
     }, 
 
 	displayGame: function(){
-        console.log("Attempting to display game...");
+        //console.log("Attempting to display game...");
 		var x, y;
 		var rowDisplay;
 		//rows[y[x]].draw()
@@ -203,9 +206,14 @@ var Game = {
 	},
 
 	init: function(){
+        clear();
 		this.generateColumns();
 		//console.log(this.rows);
 		var rounds = parseInt(sget("How many iterations would you like?").trim());
+        clear();
+        if (isNaN(rounds)){
+            rounds = 1;
+        }
         this.displayGame();
         console.log("Starting position...");
         for(var i = 0; i < rounds; i++){
@@ -220,6 +228,7 @@ var Game = {
 
     pressEnter: function(){
         var input = sget("Press enter to iterate...");
+        clear();
        
     }
 		
