@@ -166,6 +166,7 @@ var Game = {
             if (budx >= 0 && budy >= 0 && !(this.rows[budy][budx].isDead)) 
             livingNeighbors++;
         }
+        return livingNeighbors; 
     }, 
 
 	displayGame: function(){
