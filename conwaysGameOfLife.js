@@ -7,13 +7,14 @@ Any live cell with two or three live neighbors lives on to the next generation.
 Any dead cell with exactly three live neighbors becomes a live cell.
 (You may wish to Google this (very popular) kata for examples and additional instructions.)
 */
-
+var sget = require("sget");
+var clear = require("clear")
 var Game = {
 
     DIMENSIONS: 16,
 
-	gridWidth: 16,
-	gridHeight: 16,
+	gridWidth: 30,
+	gridHeight: 30,
 
     BUDDIES: [[-1,1],[0,1],[1,1],
               [-1,0],      [1,0],
@@ -26,9 +27,9 @@ var Game = {
 		var cells = [];
 		for (var i = 0; i < this.gridWidth; i++){
 			cells.push(this.newCell(i, rowIndex));
-			if ((i%5 === 0 && rowIndex%6 === 0) || (i%2 === 0 && rowIndex%10 === 0)){ //starting pattern
+			if ((i%3 === 0 && rowIndex%8 === 0) || (i%2 === 0 && rowIndex%5 === 0)){ //starting pattern
 				cells[i].isDead = false;
-				console.log(cells[i].isDead);
+				//console.log(cells[i].isDead);
 			}
 		}
 	return cells;
@@ -204,12 +205,23 @@ var Game = {
 	init: function(){
 		this.generateColumns();
 		//console.log(this.rows);
-		this.displayGame();
-		console.log("Generation Two:");
-		this.checkGeneration();
-        this.iterate(); 
-		this.displayGame();
-	}
+		var rounds = parseInt(sget("How many iterations would you like?").trim());
+        this.displayGame();
+        console.log("Starting position...");
+        for(var i = 0; i < rounds; i++){
+    		this.checkGeneration();
+            this.pressEnter();
+            this.iterate();
+            this.displayGame();
+            console.log("Generation "+(i+2));
+        }
+    
+	},
+
+    pressEnter: function(){
+        var input = sget("Press enter to iterate...");
+       
+    }
 		
 }
 
