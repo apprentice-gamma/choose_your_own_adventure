@@ -10,7 +10,9 @@ Any dead cell with exactly three live neighbors becomes a live cell.
 
 var Game = {
 
-	gridWidth: 32,
+    DIMENSIONS: 16,
+
+	gridWidth: 16,
 	gridHeight: 16,
 
     BUDDIES: [[-1,1],[0,1],[1,1],
@@ -20,6 +22,7 @@ var Game = {
 	rows: [],
 	
 	generateRow: function(rowIndex){
+       // console.log("Generating Row");
 		var cells = [];
 		for (var i = 0; i < this.gridWidth; i++){
 			cells.push(this.newCell(i, rowIndex));
@@ -32,6 +35,7 @@ var Game = {
 	},
 	
 	generateColumns: function(){
+     //   console.log("Generating column...");
 		for (var j = 0; j < this.gridHeight; j++){
 			this.rows.push(this.generateRow(j));
 		}
@@ -74,6 +78,8 @@ var Game = {
 		
 		var creation = new this.Cell();
 
+        creation.survives = false;
+
 		creation.living = "@";
 		creation.dead = "-";
 
@@ -97,51 +103,52 @@ var Game = {
 	},
 
 	checkState: function(x, y){
-		
+		//console.log("Checking states")
 		if (x > -1 && y > -1){
 
-			if (this.rows[x][y].isDead === false){
+            var thisCell = this.rows[x][y];
+
+			if (thisCell.isDead === false){
 				
 				if (this.checkLivingNeighbors(x,y) < 2){
-					this.rows[x][y].isDead = true;
+					thisCell.survives = false;
 				}
 				if (this.checkLivingNeighbors(x,y) > 3){
-					this.rows[x][y].isDead = true;
+					thisCell.survives = false;
 				}
 			}	
 			else
 			{
 				if (this.checkLivingNeighbors(x,y) === 3){
-					this.rows[x][y].isDead = false;
+					thisCell.survives = true;
 				}
 			}
 		}
 	},
 
+    buddy: function(maxdim, pos, direction) {
+        var newpos = pos + direction;
+        if (newpos >= maxdim) {
+           newpos = -1;
+        }
+        return newpos;
+    },
+
 	checkLivingNeighbors: function(x, y){
+        //console.log("Checking neighbors");
 		var livingNeighbors = 0;
-		if (x != 0 && y!=0 && x!=15 && y!=15){
-			if (this.rows[x-1][y].isDead === false){
-				livingNeighbors++;
-			}
 
-			if (this.rows[x+1][y].isDead === false){
-				livingNeighbors++;
-			}
-
-			if (this.rows[x][y-1].isDead === false){
-				livingNeighbors++;
-			}
-
-			if (this.rows[x][y+1].isDead === false){
-				livingNeighbors++;
-			}
-		}
-		return livingNeighbors;
-
-	},
+        for (var i = 0; i < this.BUDDIES.length; i++) {
+            var budx = this.buddy(this.gridWidth, x, this.BUDDIES[i][0]);
+            var budy = this.buddy(this.gridHeight, y, this.BUDDIES[i][1]);
+            
+            if (budx >= 0 && budy >= 0 && !(this.rows[budy][budx].isDead)) 
+            livingNeighbors++;
+        }
+    }, 
 
 	displayGame: function(){
+        console.log("Attempting to display game...");
 		var x, y;
 		var rowDisplay;
 		//rows[y[x]].draw()
@@ -187,172 +194,10 @@ Game.init();
 
 
 /*
-//BOUNDS
-            //Handle left bound
-            if (y == 0) {
-                if (board[x ][(y + 1)] == "x"){
-                    counter ++;
-                }
-                //Left bottom corner
-                if (x == 29) {
-                    if (board[(x - 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                }
-                //Left top corner
-                else if (x == 0) {
-                    if (board[(x + 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                }
-                else{
-                    if (board[(x - 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[x][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                }
-            }
-            //handle right bound
-            else if (y == 29) {
-                if (board[(x)][(y - 1)] == "x"){
-                    counter ++;
-                }
-                //right bottom corner
-                if (x == 29) {
-                    if (board[(x - 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                }
-                //right top corner
-                else if (x == 0) {
-                    if (board[x + 1][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                }
-                else{
-                    if (board[(x - 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[x][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][(x - 1)] == "x") {
-                        counter ++;
-                    }
-                }
-            }
-            else{
-                //Top bounds
-                if (x == 0) {
-                    if (board[x][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[x][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][y + 1] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][y - 1] == "x") {
-                        counter ++;
-                    }
 
-                }
-                //Bottom bounds
-                else if (x == 29) {
-                    if (board[x][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[x][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                }
-                else{
-                    //center of board
-                    if (board[x][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[x][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][y] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x - 1)][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][(y + 1)] == "x") {
-                        counter ++;
-                    }
-                    if (board[(x + 1)][(y - 1)] == "x") {
-                        counter ++;
-                    }
-                }
-            } //end board checking
+NOTES:
 
-            //apply rules to cell
-            if (alive == true) {
-                if (counter < 2) {
-                    board[x][y] = "";
-                }
-                if (counter > 3) {
-                    board[x][y] = "";
-                }
-            }
-            else if (alive == false) {
-                if (counter == 3) {
-                    board[x][y] = "x";
-                }
-                else if (counter != 3){
-                    board[x][y] = "";
-                }
-            }
-
-in the Game-Of-Life you are supposed to scan the entire board, and only then apply the changes. You are applying changes part-way through the process (as you check each cell, you change its state). So, if you change the cell in one location, when you check it's neighbour it will affect the results).
+In the Game-Of-Life you are supposed to scan the entire board, and only then apply the changes. You are applying changes part-way through the process (as you check each cell, you change its state). So, if you change the cell in one location, when you check it's neighbour it will affect the results).
 
 You need to 'store' the counter for each cell until you have completed the scan, and then re-set each block in the board. Essentially you need the following:
 
