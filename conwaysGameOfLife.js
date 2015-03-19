@@ -120,6 +120,8 @@ var Game = {
 				if (this.checkLivingNeighbors(x,y) > 3){
 					thisCell.survives = false;
 				}
+                else
+                    thisCell.survives = true;
 			}	
 			else
 			{
@@ -216,12 +218,13 @@ var Game = {
         }
         this.displayGame();
         console.log("Starting position...");
+        this.pressEnter();
         for(var i = 0; i < rounds; i++){
     		this.checkGeneration();
-            this.pressEnter();
             this.iterate();
             this.displayGame();
             console.log("Generation "+(i+2));
+            this.pressEnter();
         }
     
 	},
